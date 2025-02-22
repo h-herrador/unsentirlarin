@@ -16,7 +16,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="/partidos" class="nav-button">
+                <a href="/jornadas" class="nav-button">
                     <i class="fas fa-futbol"></i> Partidos
                 </a>
             </li>
@@ -34,16 +34,12 @@
     <h2>CD LARÍN</h2>
 </section>
 
-<!-- Imagen del equipo -->
-<section class="team-image">
-    <img src="{{ url_for('static', filename='images.jpg') }}" alt="Escudo del CD Larín">
-    <div class="image-caption">#UnSentirLarín</div>
-</section>
+<!-- Espacio en blanco antes de la imagen -->
+<div style="height: 20px;"></div>
 
-<!-- Lista de jugadores -->
-<section class="jugadores-section">
-    {% for jugador in jugadores %}
-    <p class="jugador">{{ jugador.nombre }} ({{ jugador.dorsal }})</p>
-    {% endfor %}
+<!-- Imagen del equipo -->
+<section class="team-image text-center">
+    <img src="{{ url_for('static', filename='images.jpg') }}" alt="Escudo del CD Larín">
+    <div class="image-caption" style="font-size: 2em; font-weight: bold; color: #3498db; text-shadow: 2px 2px 4px #2c3e50; margin-top: 10px;">#UnSentirLarín</div>
 </section>
 {% endblock %}

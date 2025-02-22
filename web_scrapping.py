@@ -187,9 +187,9 @@ def get_jornadas():
         partidos.append(partido)
     
     # Creamos un DataFrame con los datos
-    partidos = pd.DataFrame(partidos)
+    jornadas = pd.DataFrame(partidos)
 
-    return partidos
+    return jornadas
 
 
 if __name__ == "__main__":
