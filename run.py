@@ -24,6 +24,11 @@ def page_plantilla():
 def page_jornadas():
     return render_template('jornadas.html')
 
+# Página de actualidad
+@app.route('/actualidad')
+def page_actualidad():
+    return render_template('actualidad.html')
+
 # Rutas para obtener los datos en formato JSON
 @app.route('/data/clasificacion')
 def data_clasificacion():

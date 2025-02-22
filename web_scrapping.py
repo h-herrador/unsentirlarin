@@ -1,5 +1,6 @@
-import requests
+import json, requests, os
 from bs4 import BeautifulSoup
+from datetime import datetime, timedelta
 import pandas as pd
 
 
@@ -22,6 +23,14 @@ def get_clasificacion(url):
     """
     Función que obtiene la clasificación de un grupo de la preferente
     """
+
+    if os.path.exists('clasificacion.json'):
+        with open('clasificacion.json') as f:
+            data = json.load(f)
+            fecha = datetime.strptime(data["fecha"], "%Y-%m-%d")
+            if fecha + timedelta(days=1) > datetime.now():
+                return pd.read_json('clasificacion.json').drop(columns='fecha')
+
     soup = download_soup(url)
 
     # Buscamos la tabla de clasificación
@@ -59,10 +68,25 @@ def get_clasificacion(url):
 
     # Creamos un DataFrame con los datos
     clasificacion = pd.DataFrame(clasificacion)
+    clasificacion.to_json('clasificacion.json')
+
+    with open('clasificacion.json') as f:
+        data = json.load(f)
+        data["fecha"] = datetime.now().strftime("%Y-%m-%d")
+    with open('clasificacion.json', 'w') as f:
+        json.dump(data, f)
+
     return clasificacion
 
 
 def get_plantilla(url):
+
+    if os.path.exists('plantilla.json'):
+        with open('plantilla.json') as f:
+            data = json.load(f)
+            fecha = datetime.strptime(data["fecha"], "%Y-%m-%d")
+            if fecha + timedelta(days=1) > datetime.now():
+                return pd.read_json('plantilla.json').drop(columns='fecha')
 
     soup = download_soup(url)
 
@@ -115,13 +139,30 @@ def get_plantilla(url):
             plantilla["Goles"][i] = "21 (goles encajados)"
         if nombre.strip() == "Vergara":
             plantilla["Goles"][i] = "20 (goles encajados)"
-    return pd.DataFrame(plantilla)
+    
+    plantilla = pd.DataFrame(plantilla)
+    plantilla.to_json('plantilla.json')
+
+    with open('plantilla.json') as f:
+        data = json.load(f)
+        data["fecha"] = datetime.now().strftime("%Y-%m-%d")
+    with open('plantilla.json', 'w') as f:
+        json.dump(data, f)
+
+    return plantilla
 
 
 def get_jornadas():
     '''
     Función que obtiene la información de los partidos jugados y por jugar de la temporada
     '''
+    if os.path.exists('jornadas.json'):
+        with open('jornadas.json') as f:
+            data = json.load(f)
+            fecha = datetime.strptime(data["fecha"], "%Y-%m-%d")
+            if fecha + timedelta(days=1) > datetime.now():
+                return pd.read_json('jornadas.json').drop(columns='fecha')
+
     partidos = []
 
     for jornada in range(1, 35):
@@ -185,11 +226,16 @@ def get_jornadas():
                 partido['GolesVisitante'] = ''
         
         partidos.append(partido)
-    
-    # Creamos un DataFrame con los datos
-    jornadas = pd.DataFrame(partidos)
+        df = pd.DataFrame(partidos)
+        df.to_json('jornadas.json')
 
-    return jornadas
+        with open('jornadas.json') as f:
+            data = json.load(f)
+            data["fecha"] = datetime.now().strftime("%Y-%m-%d")
+        with open('jornadas.json', 'w') as f:
+            json.dump(data, f)
+
+    return df
 
 
 if __name__ == "__main__":
