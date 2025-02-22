@@ -1,0 +1,121 @@
+/* Estilos para el header principal */
+.main-header {
+    text-align: center;
+    padding: 20px;
+    background-color: #2c3e50; /* Fondo oscuro */
+    color: white; /* Texto blanco */
+}
+
+/* Estilos para la barra de navegación */
+.button-nav {
+    margin-top: 10px;
+}
+
+.nav-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.nav-item {
+    margin: 0;
+}
+
+.nav-button {
+    padding: 10px 20px;
+    background-color: #3498db; /* Color azul */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-button:hover {
+    background-color: #2980b9; /* Color azul más oscuro al pasar el mouse */
+    transform: translateY(-2px); /* Efecto de elevación */
+}
+
+/* Estilos para el nombre del equipo */
+.team-name {
+    text-align: center;
+    padding: 20px;
+    background-color: #e74c3c; /* Fondo rojo */
+    color: white;
+    margin-top: 20px;
+}
+
+.team-name h2 {
+    font-size: 2.5em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+/* Estilos para la sección de jugadores */
+.jugadores-section {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #ecf0f1; /* Fondo gris claro */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.jugador {
+    font-size: 1.2em;
+    margin: 10px 0;
+    color: #333;
+}
+
+/* Estilos para la imagen del equipo */
+/* Estilos para la imagen del equipo */
+.team-image {
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+    padding: 0;
+}
+
+/*comentar la siguiente clase*/
+/* .team-image img {
+    max-width: 100%; 
+    height: auto; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+} */
+
+
+
+.team-image img {
+    width: 100%; /* La imagen ocupa el ancho completo */
+    height: auto; /* Mantiene la proporción de la imagen */
+    display: block;
+}
+
+/* Efecto de hover para la imagen */
+.team-image img:hover {
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+    transition: transform 0.3s ease;
+    filter: brightness(1.1); /* Aumenta el brillo */
+}
+
+/* Efecto de hover para los botones */
+.nav-button:hover {
+    background-color: #2980b9; /* Cambia el color de fondo */
+    transform: translateY(-5px); /* Eleva el botón ligeramente */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Agrega una sombra */
+}
+
+/* Efecto de hover para los jugadores */
+.jugador:hover {
+    color: #e74c3c; /* Cambia el color del texto */
+    font-weight: bold; /* Hace el texto en negrita */
+    transform: translateX(10px); /* Desplaza el texto ligeramente a la derecha */
+    transition: all 0.3s ease; /* Suaviza la transición */
+}
