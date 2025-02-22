@@ -1,0 +1,19 @@
+<!doctype html>
+<title>{% block title %}{% endblock %} CD Larín </title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<header>
+    <nav class="navbar">
+      <ul class="nav-left">
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/plantilla">Plantilla</a></li>
+        <li><a href="/clasificacion">Clasificacion</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="https://instagram.com" target="_blank" class="social-icon social-icon-insta" aria-label="Instagram"></a>
+        <a href="https://facebook.com" target="_blank" class="social-icon social-icon-facebook" aria-label="Facebook"></a>
+      </div>
+    </nav>    
+</header>
+<section class="content">
+  {% block content %}{% endblock %}
+</section>

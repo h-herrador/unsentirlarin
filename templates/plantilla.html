@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% for jugador in jugadores %}
+<div class="pregunta">
+    <p>{{jugador}}</p>
+</div>
+
+{% endfor %}
+
+{% endblock %}
