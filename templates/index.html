@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% for jugador in jugadores %}
+<p>{{jugador.nombre}}({{jugador.dorsal}})</p>
+{% endfor %}
+{% endblock %}
