@@ -118,7 +118,82 @@ def get_plantilla(url):
     return pd.DataFrame(plantilla)
 
 
+def get_jornadas():
+    '''
+    Función que obtiene la información de los partidos jugados y por jugar de la temporada
+    '''
+    partidos = []
+
+    for jornada in range(1, 35):
+        url = 'https://www.lapreferente.com/index.php?comp=20517&accion=&jor='+str(jornada)
+        soup = download_soup(url)
+        # Buscamos la tabla de la jornada
+        table = soup.find('table', {'id': 'panelResultados20517-'+str(jornada)})
+        # Buscamos las filas de la tabla
+        rows = table.find_all('tr')
+        # Creamos una lista vacía para guardar los datos
+        jornada = {
+            'Local': [],
+            'Goles Local': [],
+            'Goles Visitante': [],
+            'Visitante': []
+        }
+
+        # Iteramos sobre las filas de la tabla
+        for row in rows[1:]:
+            # Buscamos las celdas de la fila
+            cells = row.find_all('td')
+            # Guardamos los datos en las listas
+            local = cells[0].find('span')
+            visitante = cells[2].find('span')
+            jornada['Visitante'].append(visitante.text)
+            jornada['Local'].append(local.text)
+            resultado = cells[1].text
+            jornada['Goles Local'].append(resultado.split('-')[0])
+            jornada['Goles Visitante'].append(resultado.split('-')[1])
+
+        # Inicializamos las variables para guardar los datos del C.D. Larín
+        partido = {
+            'Local': '',
+            'GolesLarin': '',
+            'GolesVisitante': '',
+            'Rival': ''
+        }
+
+        # Recorremos las listas de local y visitante y si el equipo es el C.D. Larín, guardamos los datos
+        for i in jornada['Local']:
+            if i == ' C.D. Larín':
+                partido['Local'] = True
+                partido['Rival'] = jornada['Visitante'][jornada['Local'].index(i)]
+                partido['GolesLarin'] = jornada['Goles Local'][jornada['Local'].index(i)][:-1]
+                partido['GolesVisitante'] = jornada['Goles Visitante'][jornada['Local'].index(i)][1:]
+
+        for i in jornada['Visitante']:
+            if i == ' C.D. Larín':
+                partido['Local'] = False
+                partido['Rival'] = jornada['Local'][jornada['Visitante'].index(i)]
+                partido['GolesLarin'] = jornada['Goles Visitante'][jornada['Visitante'].index(i)][1:]
+                partido['GolesVisitante'] = jornada['Goles Local'][jornada['Visitante'].index(i)][:-1]
+
+        # Si en el campo resultado aparece la fecha del partido, lo eliminamos
+        for i in partido['GolesLarin']:
+            if i == ':':
+                partido['GolesLarin'] = ''
+
+        for i in partido['GolesVisitante']:
+            if i == ':':
+                partido['GolesVisitante'] = ''
+        
+        partidos.append(partido)
+    
+    # Creamos un DataFrame con los datos
+    partidos = pd.DataFrame(partidos)
+
+    return partidos
+
+
 if __name__ == "__main__":
     url = "https://www.lapreferente.com/E13046/cd-larin"
-    get_plantilla(url)
-    get_clasificacion(url)
+    plantilla = get_plantilla(url)
+    clasificacion = get_clasificacion(url)
+    jornadas = get_jornadas()
